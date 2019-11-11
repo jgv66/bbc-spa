@@ -1,0 +1,45 @@
+<h2 class="animated fadeIn fast">Stock Local / Producto</h2>
+<hr>
+<form (ngSubmit)="consultaStock()">
+    <div class="form-row">
+        <div class="col">
+            <select class="form-control" style="width: 420px;" name="local" [(ngModel)]="local" (change)="cambiandoLocal()">
+              <option value="">Seleccione un local</option>
+              <option *ngFor="let loc of locales" [value]="loc.codigo">{{ loc.nombre }}</option>
+            </select>
+        </div>
+        <div class="col">
+            <input class="form-control" type="text" name="codigo" [(ngModel)]="codigo" placeholder="SKU / CODE">
+        </div>
+        <div class="col">
+            <button type="submit" class="btn btn-outline-primary mb-2">Rescatar datos</button>
+        </div>
+    </div>
+</form>
+
+<div class="progress" style="height: 8px;" *ngIf=" cargando ">
+    <div class="progress-bar progress-bar-striped  progress-bar-animated" role="progressbar" style="width: 100%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr translate="no">
+            <th scope="col">Local</th>
+            <th scope="col">Código</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Saldo</th>
+            <th scope="col">Reservas</th>
+            <th scope="col">Disponible</th>
+        </tr>
+    </thead>
+    <tbody translate="no">
+        <tr *ngFor="let data of stock">
+            <td scope="row">{{data.local}}</td>
+            <td>{{data.codigo}}</td>
+            <td>{{data.descripcion}}</td>
+            <td>{{data.saldo | number:"1.0-3"}}</td>
+            <td>{{data.reservas | number:"1.0-3"}}</td>
+            <td>{{data.disponible | number:"1.0-3"}}</td>
+        </tr>
+    </tbody>
+</table>

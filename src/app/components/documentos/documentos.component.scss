@@ -1,0 +1,62 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    table {
+        table-layout: auto;
+        height: 660px;
+        width: auto;
+        thead tr {
+            display: block;
+            width: 100%;
+        }
+        tbody {
+            display: block;
+            overflow: auto;
+            height: 70%;
+            width: 100%;
+        }
+        // folio
+        th:nth-child(1),
+        td:nth-child(1) {
+            width: 10px; // calc(100%/20);
+            text-align: right;
+        }
+        // folio
+        th:nth-child(2),
+        td:nth-child(2) {
+            width: 60px; // calc(100%/20);
+            text-align: right;
+        }
+        // emision
+        th:nth-child(3),
+        td:nth-child(3) {
+            width: 70px; // calc(100%/20*3);
+        }
+        // vencim
+        th:nth-child(4),
+        td:nth-child(4) {
+            width: 70px; // calc(100%/20*6);
+        }
+        // monto
+        th:nth-child(5),
+        td:nth-child(5) {
+            width: 90px; // calc(100%/20*2);
+        }
+        // cliente
+        th:nth-child(6),
+        td:nth-child(6) {
+            width: 150px; // calc(100%/20);
+        }
+        // vendedor
+        th:nth-child(7),
+        td:nth-child(7) {
+            width: 150px; // calc(100%/20*2);
+            text-align: left;
+        } // vendedor
+        th:nth-child(8),
+        td:nth-child(8) {
+            width: 30px; // calc(100%/20*2);
+        }
+    }
+}

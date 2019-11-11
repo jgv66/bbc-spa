@@ -1,0 +1,51 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    table {
+        table-layout: auto;
+        height: 660px;
+        width: auto;
+        thead tr {
+            display: block;
+            width: 100%;
+        }
+        tbody {
+            display: block;
+            overflow: auto;
+            height: 90%;
+            width: 100%;
+        }
+        // Bodega
+        th:nth-child(1),
+        td:nth-child(1) {
+            width: 80px; // calc(100%/20);
+            text-align: right;
+        }
+        // Codigo
+        th:nth-child(2),
+        td:nth-child(2) {
+            width: 130px; // calc(100%/20*3);
+        }
+        // Descripcion
+        th:nth-child(3),
+        td:nth-child(3) {
+            width: 450px; // calc(100%/20*6);
+        }
+        // Ingresos
+        th:nth-child(4),
+        td:nth-child(4) {
+            width: 130px; // calc(100%/20*2);
+        }
+        // Egresos
+        th:nth-child(5),
+        td:nth-child(5) {
+            width: 130px; // calc(100%/20);
+        }
+        // Saldo
+        th:nth-child(6),
+        td:nth-child(6) {
+            width: 130px; // calc(100%/20*2);
+        }
+    }
+}

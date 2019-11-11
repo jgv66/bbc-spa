@@ -136,5 +136,10 @@
       }
     }
   },
-  "defaultProject": "bbc-spa"
+  "defaultProject": "bbc-spa",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
+  }
 }
