@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -33,11 +34,17 @@ export class DocumentserviceService {
     return this.http.get( xUrl, { headers: this.API_HEAD } );
   }
 
-  test( cSP, parametros ) {
-    const accion = '/proalma';
+  enviarDocumentos( lista ) {
+    const accion = '/ksp_guardaDocumentos';
+    const url  = this.NODE_URL + this.NODE_PORT + accion;
+    const body = { docs: JSON.stringify( lista ) } ;
+    console.log(body);
+    return this.http.post( url, body );
+  }
+
+  buscarUsuario( body ) {
+    const accion = '/ksp_buscarUsuario';
     const url    = this.NODE_URL + this.NODE_PORT + accion;
-    const body   = { sp: cSP, datos: parametros };
-    console.log(url);
     return this.http.post( url, body );
   }
 

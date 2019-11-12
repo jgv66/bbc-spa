@@ -227,12 +227,17 @@ export class DocumentosComponent implements OnInit {
     });
   }
 
+  // this.DocsSS.buscarUsuario( { email: 'pamela.olguin@babycenterstore.cl ',
+  //                              pssw:  '13687',
+  //                              sistema: 'traspasos' } )
+  //     .subscribe( datos => console.log( datos ) );
+
   trasladarMarcados() {
-    this.DocsSS.test( 'ksp_buscarUsuario',
-                      { email: 'pamela.olguin@babycenterstore.cl ',
-                        pssw:  '13687',
-                        sistema: 'traspasos' } )
-        .subscribe( datos => console.log( datos ) );
+    console.log(this.documentos);
+    this.DocsSS.enviarDocumentos( this.documentos )
+        .subscribe( data => {
+          console.log(data);
+        });
   }
 
 
