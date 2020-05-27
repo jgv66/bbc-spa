@@ -1,0 +1,22 @@
+<button type="button" class="btn btn-primary" (click)="openModal(template)">Editar</button>
+
+<ng-template #template>
+    <div class="modal-header">
+        <h5>Local BSale que correponda a Sucursal Random</h5>
+        <button type="button" class="close pull-right" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body">
+        <div class="form-row" style="max-width: 450px ;">
+            <select class="form-control" style="width: 420px;" name="local" [(ngModel)]="local" (change)="cambiandoLocal()">
+          <option value="">Seleccione un local</option>
+          <option *ngFor="let loc of locales" [value]="loc.codigo">{{ loc.nombre }}</option>
+        </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="actualizar()">Actualizar</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="modalRef.hide()">Salir</button>
+    </div>
+</ng-template>

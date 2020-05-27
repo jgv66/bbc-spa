@@ -1,0 +1,15 @@
+{
+  "name": "valencia-spa-server-3012",
+  "version": "1.0.0",
+  "description": "api aceros valencia",
+  "main": "ktp_server_mssql.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "kinetik.cl",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mssql": "^6.1.0"
+  }
+}

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -30,15 +29,21 @@ export class DocumentserviceService {
   }
 
   retrieveDetail( xUrl ) {
-    // console.log(xUrl);
+    console.log(xUrl);
     return this.http.get( xUrl, { headers: this.API_HEAD } );
   }
 
-  enviarDocumentos( lista ) {
+  retrieveDoc( params: string ) {
+    const xUrl = this.API_BSALE + this.API_VER + 'documents.json' + (( params ) ? '?' + params : '' ) ;
+    console.log(xUrl);
+    return this.http.get( xUrl, { headers: this.API_HEAD } );
+  }
+
+  enviarDocumento( lista ) {
     const accion = '/ksp_guardaDocumentos';
     const url  = this.NODE_URL + this.NODE_PORT + accion;
-    const body = { docs: JSON.stringify( lista ) } ;
-    console.log(body);
+    const body = { query: lista };
+    // console.log(body);
     return this.http.post( url, body );
   }
 
@@ -47,6 +52,21 @@ export class DocumentserviceService {
     const url    = this.NODE_URL + this.NODE_PORT + accion;
     return this.http.post( url, body );
   }
+
+  retrievePayments( params?: string ) {
+    const xUrl = this.API_BSALE + this.API_VER + 'payments.json' + (( params ) ? '?' + params : '' ) ;
+    // console.log(xUrl);
+    return this.http.get( xUrl, { headers: this.API_HEAD } );
+  }
+
+  enviarPagos( lista, fini, ffin ) {
+    const accion = '/ksp_guardaPagos';
+    const url  = this.NODE_URL + this.NODE_PORT + accion;
+    const body = { query: JSON.stringify(lista), ini: fini, fin: ffin };
+    // console.log(body);
+    return this.http.post( url, body );
+  }
+
 
 }
 

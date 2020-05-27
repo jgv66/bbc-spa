@@ -1,5 +1,8 @@
 {
-    "folders": [
+	"folders": [
+		{
+			"path": "F:\\angular\\babycenter"
+		},
 		{
 			"path": "."
 		},
@@ -7,5 +10,5 @@
 			"path": "F:\\angular\\babycenter_server_3077"
 		}
 	],
-    "settings": {}
+	"settings": {}
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { StockserviceService } from '../../services/stockservice.service';
-import { ComunserviceService } from '../../services/comunservice.service';
+import { StockserviceService } from '../../../services/stockservice.service';
+import { ComunserviceService } from '../../../services/comunservice.service';
 
 @Component({
   selector: 'app-stockxlocal',

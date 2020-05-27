@@ -1,35 +1,29 @@
 <h2 class="animated fadeIn fast">Traspaso de Documentos</h2>
 <hr>
-<form (ngSubmit)="consultaDocs()">
+<form (ngSubmit)="obsConsultaDocs()">
     <div class="form-row">
-        <div class="col">
+        <div class="col" style="max-width: 450px ;">
             <select class="form-control" style="width: 420px;" name="local" [(ngModel)]="local" (change)="cambiandoLocal()">
               <option value="">Seleccione un local</option>
               <option *ngFor="let loc of locales" [value]="loc.codigo">{{ loc.nombre }}</option>
             </select>
         </div>
-        <div class="col">
+        <div class="col" style="max-width: 200px ;">
             <input class="form-control" type="date" name="fechaDesde" [(ngModel)]="fechaDesde" placeholder="Fecha desde">
         </div>
-        <div class="col">
+        <div class="col" style="max-width: 200px ;">
             <input class="form-control" type="date" name="fechaHasta" [(ngModel)]="fechaHasta" placeholder="Fecha hasta">
         </div>
-        <div class="col">
-            <button type="submit" class="btn btn-outline-primary mb-2">Rescatar datos</button>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <button type="button" class="btn btn-outline-primary mb-2" (click)="resuelveOtros()" *ngIf="documentos.length > 0">Resolver otros datos</button>
-        </div>
-        <div class="col">
-            <button type="button" class="btn btn-outline-primary mb-2" (click)="ordenaPorFechas()" *ngIf="documentos.length > 0">Ordenar por Emisión</button>
-        </div>
-        <div class="col">
-            <button type="button" class="btn btn-outline-primary mb-2" (click)="marcarTodos()" *ngIf="documentos.length > 0">Marcar/Desmarcar todo</button>
-        </div>
-        <div class="col">
-            <button type="button" class="btn btn-outline-primary mb-2" (click)="trasladarMarcados()" *ngIf="documentos.length > 0">Trasladar a ERP</button>
+        <div class="btn-group" role="group">
+            <div class="col" style="max-width: 85px ;">
+                <button type="submit" class="btn btn-outline-primary mb-2">Buscar</button>
+            </div>
+            <div class="col" style="max-width: 85px ;" *ngIf="documentos.length > 0">
+                <button type="button" class="btn btn-outline-primary mb-2" (click)="marcarTodos()">Marcar</button>
+            </div>
+            <div class="col" style="max-width: 100px ;" *ngIf="documentos.length > 0">
+                <button type="button" class="btn btn-outline-primary mb-2" (click)="trasladarMarcados()" *ngIf="documentos.length > 0">Traspasar</button>
+            </div>
         </div>
     </div>
 </form>
@@ -38,7 +32,11 @@
     <div class="progress-bar progress-bar-striped  progress-bar-animated" role="progressbar" style="width: 100%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
 </div>
 
-<table class="table table-striped table-hover">
+<div class="progress" style="height: 8px;" *ngIf=" cargando22 ">
+    <div class="progress-bar progress-bar-striped  progress-bar-animated" role="progressbar" style="width: 100%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+
+<table class="table table-striped table-hover table-sm">
     <thead>
         <tr translate="no">
             <th scope="col">T?</th>
@@ -52,51 +50,60 @@
         </tr>
     </thead>
     <tbody translate="no">
-        <tr *ngFor="let data of documentos">
-            <td scope="row">
-                <div>
-                    <input type="checkbox" name="data.marcado" [(ngModel)]="data.marcado">
-                </div>
-            </td>
-            <td scope="row">
-                {{ data.folio }}
-                <br>
-                <p style="font-size: 50%;">{{ data.nombreDoc }}</p>
-            </td>
-            <td>{{data.emision | date:"dd-MM-yyyy" }}</td>
-            <td>{{data.vencimiento | date:"dd-MM-yyyy" }}</td>
-            <td>{{data.monto | number:"1.0-3"}}</td>
-            <td>{{data.clienteNomb }}</td>
-            <td>
-                <button class="btn btn-success" (click)="detalleOnOff( data )" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                Detalle
-                </button>
-            </td>
-            <div class="collapse" id="collapseExample" *ngIf=" data.abierto ">
-                <div class="card card-body">
-                    <!-- detalle -->
-                    <table class="table" *ngIf=" data.abierto ">
-                        <thead>
-                            <tr>
-                                <th>Código</th>
-                                <th>Cantidad</th>
-                                <th>Monto</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let item of data.itemes">
-                                <td scope="row">{{ item.variantID }}</td>
-                                <td>{{ item.cantidad | number:"1.0-0" }}</td>
-                                <td>{{ item.monto | number:"1.0-0" }}</td>
-                                <div class="row">
-                                    <p style="font-size: 50%;">{{ item.descripcion }}</p>
-                                </div>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <!-- fin detalle -->
-                </div>
-            </div>
-        </tr>
+        <ng-container *ngFor="let data of documentos">
+            <tr>
+                <td scope="row" style="text-align: center;">
+                    <div [ngClass]="{ 'bg-success': data.traspasado }">
+                        <input type="checkbox" name="data.marcado" [(ngModel)]="data.marcado">
+                    </div>
+                </td>
+                <td>
+                    <span *ngIf=" data.codeSii === '61' " class="badge badge-pill badge-danger">{{ data.folio }}</span>
+                    <span *ngIf=" data.codeSii === '33' || data.codeSii === '34' || data.codeSii === '56' " class="badge badge-pill badge-primary">{{ data.folio }}</span>
+                    <span *ngIf=" data.codeSii === '33' " class="badge badge-pill badge-primary">{{ data.folio }}</span>
+                    <span *ngIf=" data.codeSii === '39' || data.codeSii === '35' || data.codeSii === '41' " class="badge badge-pill badge-secondary">{{ data.folio }}</span>
+                    <span *ngIf=" data.codeSii === '52' " class="badge badge-pill badge-warning">{{ data.folio }}</span>
+                    <br>
+                    <p style="font-size: 50%;">{{ data.nombreDoc }}</p>
+                </td>
+                <td>{{data.emision | date:"dd-MM-yyyy" }}</td>
+                <td>{{data.vencimiento | date:"dd-MM-yyyy" }}</td>
+                <td>{{data.monto | number:"1.0-3"}}</td>
+                <td>{{data.clienteNomb }}</td>
+                <td>
+                    <button class="btn" [ngClass]="{ 'btn-secondary': abriendoDetalle !== data.folio,
+                                                     'btn-warning'  : abriendoDetalle === data.folio
+                                                    }" (click)="detalleOnOff( data )" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        Detalle
+                    </button>
+                </td>
+            </tr>
+            <tr *ngIf="detalleAbierto === data.folio">
+                <td colspan="8">
+                    <div class="card card-body">
+                        <!-- detalle -->
+                        <table class="table detail table-striped table-hover">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Cantidad</th>
+                                    <th>Monto</th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of data.itemes">
+                                    <td scope="row">{{ item.variantID }}</td>
+                                    <td>{{ item.cantidad | number:"1.0-0" }}</td>
+                                    <td>{{ item.monto | number:"1.0-0" }}</td>
+                                    <td>{{ item.descripcion }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!-- fin detalle -->
+                    </div>
+                </td>
+            </tr>
+        </ng-container>
     </tbody>
 </table>
